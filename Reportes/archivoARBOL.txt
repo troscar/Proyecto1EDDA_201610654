@@ -1,0 +1,10 @@
+digraph G{ 
+nodesep=0.8;
+ranksep=0.5;
+{rank=same;Oscar;}{rank=same;Oscar;}
+{rank=same;"Avila";"Raul";} 
+"Oscar"->"Avila";
+"Oscar"->"Raul";
+{rank=same;Avila;}
+{rank=same;Raul;}
+}
