@@ -10,46 +10,50 @@ using namespace std;
 
 int main()
 {
-   // Un �rbol de enteros
-   AVL ArbolInt;
+
+
+    return 0;
+}
+
+    //PRUEBA ARBOLL AVL 
+   /*// Un �rbol de enteros
+   AVL ArbolS;
 
    // Inserci�n de nodos en �rbol:
-   ArbolInt.Insertar("Oscar");
-   ArbolInt.Insertar("Raul");
-   ArbolInt.Insertar("Avila");
-  /* ArbolInt.Insertar("Donado");
+   ArbolS.Insertar("Oscar");
+   ArbolS.Insertar("Raul");
+   ArbolS.Insertar("Avila");
+   ArbolInt.Insertar("Donado");
    ArbolInt.Insertar("Mynor");
-   ArbolInt.Insertar("Ernesto");*/
+   ArbolInt.Insertar("Ernesto");
    cout<< " . " <<endl;
 
-   cout << "Altura de arbol " << ArbolInt.AlturaArbol() << endl;
+   cout << "Altura de arbol " << ArbolS.AlturaArbol() << endl;
 
    // Mostrar el �rbol en tres ordenes distintos:
    cout << "InOrden: ";
-   ArbolInt.InOrden(Mostrar);
+   ArbolS.InOrden(Mostrar);
    cout << endl;
    cout << "PreOrden: ";
-   ArbolInt.PreOrden(Mostrar);
+   ArbolS.PreOrden(Mostrar);
    cout << endl;
    cout << "PostOrden: ";
-   ArbolInt.PostOrden(Mostrar);
+   ArbolS.PostOrden(Mostrar);
    cout << endl;
 
    //ArbolInt.Borrar("Raul");
 
-   cout << "Altura de arbol " << ArbolInt.AlturaArbol() << endl;
+   cout << "Altura de arbol " << ArbolS.AlturaArbol() << endl;
 
    // Mostrar el �rbol en tres ordenes distintos:
    cout << "InOrden: ";
-   ArbolInt.InOrden(Mostrar);
+   ArbolS.InOrden(Mostrar);
    cout << endl;
    cout << "PreOrden: ";
-   ArbolInt.PreOrden(Mostrar);
+   ArbolS.PreOrden(Mostrar);
    cout << endl;
    cout << "PostOrden: ";
-   ArbolInt.PostOrden(Mostrar);
+   ArbolS.PostOrden(Mostrar);
    cout << endl;
-   ArbolInt.Graficar();
-   
-    return 0;
-}
+   ArbolS.Graficar();
+   */
