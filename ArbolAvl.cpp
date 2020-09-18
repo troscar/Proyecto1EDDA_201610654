@@ -57,11 +57,13 @@ class AVL {
    void Raiz() { actual = raiz; }
    // Aplicar una funci�n a cada elemento del �rbol:
    void InOrden(void (*func)(string&, int) , Nodo *nodo=NULL, bool r=true);
+   void InOrden2(void (*func)(string&, int) , Nodo *nodo=NULL, bool r=true);
    void PreOrden(void (*func)(string&, int) , Nodo *nodo=NULL, bool r=true);
    void PreOrdenGRAFICAR(Nodo *nodo=NULL, bool r=true);
    void PostOrden(void (*func)(string&, int) , Nodo *nodo=NULL, bool r=true);
    void Graficar();
    void MostrarGRAFICAR(Nodo *cabeza);
+   void Listar_Arbol();
   private:
    // Funciones de equilibrado:
    void Equilibrar(Nodo *nodo, int, bool);
@@ -461,7 +463,17 @@ void Mostrar(string &d, int FE)
 {
    cout << d << "(" << FE << "),";
 }
+int numeral=0;
+void Mostrar2(string &d, int FE)
+{
+   numeral ++;
+   cout << numeral << ". " << d << endl;
+}
 
+void AVL:: Listar_Arbol(){
+   InOrden(Mostrar2);
+   numeral=0;
+}
 string cuerpograph="";
 
 void AVL::MostrarGRAFICAR(Nodo *cabeza){
