@@ -112,8 +112,8 @@ class ArbolBB
             file <<"}\n";
             file.close();
             system(str1.c_str());
+             cout << "------------------------ GRAFICADO ----------------------------";
             system("Reportes\\ArbolBB.png");
-
         }
 
     private:

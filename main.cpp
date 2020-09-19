@@ -13,15 +13,23 @@ using json = nlohmann::json;
 #include "ArbolAvl.cpp"
 #include "ArbolBB.h"
 #include "graficas.h"
+#include "Cubo.h"
 
 int main()
 {
+    Cubo *matriz = new Cubo();
+    matriz->insertar_nueva_columna_ordenada(12);
+    matriz->insertar_nueva_fila_ordenada(6);
+    matriz->recorrer_cubo_en_fila();
+
+    
     return 0;
 }
-/*
+ /* graficas Graficar;
+    Graficar.menu2(); */
+
     //PRUEBA ARBOLL AVL 
-   // Un �rbol de enteros
-   AVL ArbolS;
+   /*AVL ArbolS;
 
    // Inserci�n de nodos en �rbol:
    ArbolS.Insertar("Oscar");
@@ -40,8 +48,7 @@ int main()
    }*/
 
     //PRUEBA ARBOL BB
-   /* graficas Graficar;
-    Graficar.menu2(); */
+  
     /*ArbolBB ABB;
     ABB.insertar("nnn","azul","12","15");
     ABB.insertar("uuu","azul","12","15");
@@ -53,5 +60,5 @@ int main()
     ABB.insertar("mmm","azul","12","15");
     ABB.insertar("ttt","azul","12","15");
     ABB.insertar("zzz","azul","12","15");
-    ABB.Graficar();*/
-    //ABB.mostrar_arbol();
+    ABB.Graficar();
+    ABB.mostrar_arbol();*/

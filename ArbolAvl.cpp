@@ -593,8 +593,8 @@ void AVL::Graficar(){
             file<<"}\n";
             file.close();
             system(str1.c_str());
-            system("Reportes\\ReporteARBOL.png");
             cout << "------------------------ GRAFICADO ----------------------------";
+            system("Reportes\\ReporteARBOL.png");
         }
 
 

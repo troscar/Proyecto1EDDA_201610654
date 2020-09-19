@@ -12,23 +12,25 @@ class Cubo
 {
      public:
         NodoAlbum *root;
-        Cubo(string nombre)
+        Cubo()
         {
-            root = new NodoAlbum(nombre,"","");
+            root = new NodoAlbum("Mattriz","rojo");
             fila = root;
             columna = root;
+            contador_x=(-1);
+            contador_y=(-1);
 
         }
 
         
-        
-        NodoAlbum* buscar_columna(string anyo)
+        int contador_x;
+        NodoAlbum* buscar_columna(string X)
         {
             NodoAlbum *temp = root->getNext();
             while (temp != 0)
             {
                 
-                if (temp->getName().compare(anyo)==0)
+                if (temp->getName().compare(X)==0)
                 {
                     return temp;
                 }
@@ -37,12 +39,14 @@ class Cubo
             return 0;
         }
 
-        NodoAlbum* buscar_fila(string mes )
+
+        int contador_y;
+        NodoAlbum* buscar_fila(string Y )
         {
-            NodoAlbum *temp = root;
+            NodoAlbum *temp = root->getDown();
             while(temp!=0)
             {
-                if (temp->getName().compare(mes)==0)
+                if (temp->getName().compare(Y)==0)
                 {
                     return temp;
                 }
@@ -52,108 +56,52 @@ class Cubo
         }
     // SOLO INGRESA EL NODO CABECERA DE DEL CUBO EN EL EJE DE LOS AÑOS CONECTADO CON LAS CABECERAS
     // SOLO UTILIZAR DESPUES DE COMPROBAR QUE NO EXISTEN 
-        NodoAlbum* insertar_nueva_columna_ordenada(string nuevo_anyo)
+        NodoAlbum* insertar_nueva_columna_ordenada(int x)
         {
             NodoAlbum *temp = root;
-            bool   vacio = true;
-            bool fin = false;
-            if(root->getNext() != 0){
-                vacio =false;
+            while(temp->getNext()!=0){
+                cout<<"buscando0";
                 temp = temp->getNext();
             }
-
-            while (temp->getNext() != 0)
-            {   
-                
-                if((temp->getName().compare(nuevo_anyo) == -1)){
-                    if(temp->getNext()->getName().compare(nuevo_anyo) == 1){
-                        NodoAlbum *nuevo = new NodoAlbum(nuevo_anyo,"","");
-                        temp->getNext()->setBefore(nuevo);
-                        nuevo->setBefore(temp);
-                        nuevo->setNext(temp->getNext());
-                        temp->setNext(nuevo);
-                        return nuevo;
-                    }
-                }
-                if(temp->getName().compare(nuevo_anyo)== 1){
-                    if(temp->getBefore() == root){
-                        NodoAlbum *nuevo = new NodoAlbum(nuevo_anyo,"","");
-                        temp->getBefore()->setNext(nuevo);
-                        nuevo->setBefore(temp->getBefore());
-                        nuevo->setNext(temp);
-                        temp->setBefore(nuevo);
-                        return nuevo;  
-                    }
-                }
-                temp = temp->getNext();      
-                
-            }
-
-            if(vacio == true){
-                NodoAlbum *nuevo = new NodoAlbum(nuevo_anyo,"","");
-                root->setNext(nuevo);
-                nuevo->setBefore(root);
-                return nuevo;
-            }
-            if(vacio == false)
+            cout<<"Termina";
+            while (contador_x<x)
             {
-                NodoAlbum *nuevo = new NodoAlbum(nuevo_anyo,"","");
+                cout<<"crea";
+                contador_x++;
+                cout<<"crea1";
+                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_x),"blanco");
+                cout<<"crea2";
                 temp->setNext(nuevo);
-                nuevo->setBefore(temp);
-                return nuevo;
+                cout<<"crea3";
+                temp = temp->getNext();
+                cout<<"crea4";
             }
         }
 
-        NodoAlbum* insertar_nueva_fila_ordenada(string nuevo_mes)
+        NodoAlbum* insertar_nueva_fila_ordenada(int y)
         {
             NodoAlbum *temp = root;
-            bool   vacio = true;
-            if(root->getDown() != 0){
-                vacio =false;
+            while(temp->getDown()!=0){
+                cout<<"buscando0";
                 temp = temp->getDown();
             }
-            while (temp->getDown() != 0)
-            {   
-                if((temp->getName().compare(nuevo_mes) == -1)){
-                    if(temp->getDown()->getName().compare(nuevo_mes) == 1){
-                        NodoAlbum *nuevo = new NodoAlbum(nuevo_mes,"","");
-                        temp->getDown()->setUp(nuevo);
-                        nuevo->setUp(temp);
-                        nuevo->setDown(temp->getDown());
-                        temp->setDown(nuevo);
-                        return nuevo;
-                    } 
-                }   
-                if(temp->getName().compare(nuevo_mes)== 1){
-                    if(temp->getUp() == root){
-                        NodoAlbum *nuevo = new NodoAlbum(nuevo_mes,"","");
-                        temp->getUp()->setDown(nuevo);
-                        nuevo->setUp(temp->getUp());
-                        nuevo->setDown(temp);
-                        temp->setUp(nuevo);
-                        return nuevo;  
-                    }
-                }    
-                temp = temp->getDown();
-            }
-
-            if(vacio == true){
-                NodoAlbum *nuevo = new NodoAlbum(nuevo_mes,"","");
-                root->setDown(nuevo);
-                nuevo->setUp(root);
-                return nuevo;
-            }
-            if(vacio == false)
+            cout<<"Termina";
+            while (contador_y<y)
             {
-                NodoAlbum *nuevo = new NodoAlbum(nuevo_mes,"","");
+                cout<<"crea";
+                contador_y++;
+                cout<<"crea1";
+                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_y),"blanco");
+                cout<<"crea2";
                 temp->setDown(nuevo);
-                nuevo->setUp(temp);
-                return nuevo;
+                cout<<"crea3";
+                temp = temp->getDown();
+                cout<<"crea4";
             }
         }
-
+/*
         void insertar_nodo_conectando(NodoAlbum * nuevo){
-            NodoAlbum * columna = buscar_columna(nuevo->getYear());
+            NodoAlbum * columna = buscar_columna(nuevo->getX());
             NodoAlbum * fila = buscar_fila(nuevo->getMonth());
 
             // NO EXISTE NNGUN CABEZAL 
@@ -196,7 +144,7 @@ class Cubo
                 }
             }
 
-            // EXISTE EL MES PERO NO EL AÑO
+            // EXISTE EL x PERO NO EL AÑO
             if(fila!=0 && columna==0){
                 bool antes =false;
                 columna = insertar_nueva_columna_ordenada(nuevo->getYear());
@@ -229,189 +177,59 @@ class Cubo
 
             // EXISTEN LOS DOS 
             if(fila!=0 && columna!=0){
-                bool existe = false;
-                //BUSCO EL NODO EN LA INTERSECCION
-                fila = fila->getNext();
-                while (fila!=0){
-                    if(fila->getYear().compare(nuevo->getYear()) == 0){
-                        existe = true;
-                        break;
-                    }
-                    fila = fila->getNext();
-                }
                 
-                cout<< existe << endl;
-                //cout<< fila->getName()<<fila->getYear()<<fila->getMonth() <<endl;
-                //si hay un nodo en la posicion
-                if(existe == true){
-                    //cout<<"entro en el if"<<endl;
-                    if(fila->getAde()==0){
-                        fila->setAde(nuevo);
-                        nuevo->setAtr(fila);
-                        //cout<<"asignado encima"<<endl;
-                        return;
-                    }
-                    if(fila->getAde()!=0){
-                        while (true)
-                        {
-                            if(fila->getAde()==0){
-                                break;
-                            }
-                            fila = fila->getAde();
-                        }
-                        fila->setAde(nuevo);
-                        nuevo->setAtr(fila);
-                        //cout<<"asignado encimafinal"<<endl;
-                        return;
-                        
-                    }
-                    //cout<< fila->getName()<<fila->getYear()<<fila->getMonth() <<endl;
-                 
-                }
-                 //si el nodo no existe 
-                 //FALTA VERIFICAR LOS NODOS ALREDEDOR SI EXISTEN               
-                if(existe == false){
-                    bool a = false;
-                    bool b = false;
-                    fila = buscar_fila(nuevo->getMonth());
-                    columna = buscar_columna(nuevo->getYear());
-                    string fi = fila->getName();
-                    string  col = columna->getName();
-                    //busco posicion mayor DE FILA
-                    while (fila->getNext()!=0){
-                        fila = fila->getNext();
-                        if(fila->getYear().compare(nuevo->getYear()) == 1){
-                            a = true;
-                            break;
-                        }
-                    }
-                    //BUSCO POSICION EN COLUMNA
-                    while (columna->getDown()!=0){
-                        columna = columna->getDown();
-                        if(columna->getMonth().compare(nuevo->getMonth()) == 1){ 
-                            b = true;
-                            break;
-                        }
-                    }
-                    //existe dentro del marco de < mes y < anyo
-                    if(a == true && b == true){
-                        nuevo->setUp(columna->getUp());
-                        nuevo->setDown(columna);
-                        nuevo->setBefore(fila->getBefore());
-                        nuevo->setNext(fila);
-                        columna->getUp()->setDown(nuevo);
-                        columna->setUp(nuevo);
-                        fila->getBefore()->setNext(nuevo);
-                        fila->setBefore(nuevo);
-                    }
-                    //existe en el dentro de mes pero no de anyo
-                    if(a == true && b == false){
-                        nuevo->setUp(columna);
-                        nuevo->setBefore(fila->getBefore());
-                        nuevo->setNext(fila);
-                        columna->setDown(nuevo);
-                        fila->getBefore()->setNext(nuevo);
-                        fila->setBefore(nuevo);
-                    
-                    }
-                    //existe en dentro de anio pero no de mes 
-                    if(a == false && b == true){
-                        nuevo->setUp(columna->getUp());
-                        nuevo->setDown(columna);
-                        nuevo->setBefore(fila);
-                        fila->setNext(nuevo);
-                        columna->getUp()->setDown(nuevo);
-                        columna->setUp(nuevo);
-                    
-                    }
-                    //existe fuera del cuadro
-                    if(a == false && b == false){
-                        nuevo->setUp(columna);
-                        nuevo->setBefore(fila);
-                        fila->setNext(nuevo);
-                        columna->setDown(nuevo);
-                    
-                    }
-                }   
             }
         }
-        
+        */
         void recorrer_cubo_en_colum(){
             NodoAlbum* auxFila = root;
             NodoAlbum* auxColu ;
-            NodoAlbum* auxAde ;
-            string nod;
             while (auxFila!=0)
             {
+                cout <<"||" <<auxFila->getName() <<"||"<< endl;
                 auxColu = auxFila; 
                 while (auxColu != 0)
                 {
-                    auxAde = auxColu->getAde();
-                    nod = "";
-                    nod = "|| " +auxColu->getName() + " " +auxColu->getYear() + " "+ auxColu->getMonth()+" || ";
-                    while (auxAde != 0)
-                    {
-                        nod = nod + "|| " +auxAde->getName() + " " +auxAde->getYear() + " "+ auxAde->getMonth()+" || ";
-                        auxAde = auxAde->getAde();
-                    }
-                    cout << nod << endl;
+
+                    cout <<"||" <<auxColu->getName() <<"||"<< endl;
                     auxColu = auxColu->getDown();
                 }
                 auxFila= auxFila->getNext();
                 cout   << "-----fin columna-----"<<endl;
             }
             cout << "---------------------------------------------"<< endl;       
-            cout << "---------FIN DE album -----------"<< endl;
+            cout << "---------FIN DE matriz -----------"<< endl;
         }
+
         void recorrer_cubo_en_fila(){
             NodoAlbum* auxFila ;
             NodoAlbum* auxColu = root;
-            NodoAlbum* auxAde;
             string nod;
             while (auxColu!=0)
             {
                 auxFila = auxColu; 
                 while (auxFila != 0)
                 {   
-                    auxAde = auxFila;
-                    nod ="";
-                    //nod = "|| " +auxFila->getName() + " " +auxFila->getYear() + " "+ auxFila->getMonth()+" || ";
-                    while (auxAde != 0)
-                    {
-                        
-                        nod = nod + "|| " +auxAde->getName() + " " +auxAde->getYear() + " "+ auxAde->getMonth()+" || ";
-                        auxAde = auxAde->getAde();
-                    }
-                    cout << nod << endl;
-                    
+                    cout <<"||" <<auxFila->getName() <<"||";
                     auxFila= auxFila->getNext();
                 }
                 auxColu= auxColu->getDown();
                 cout   << "-----fin fila-----"<<endl;
             }
             cout << "---------------------------------------------"<< endl;       
-            cout << "---------FIN DE album -----------"<< endl;      
+            cout << "---------FIN DE matriz -----------"<< endl;      
         }
 
 
         NodoAlbum* buscar_nodo_(string nombre){
             NodoAlbum* auxFila = root;
             NodoAlbum* auxColu ;
-            NodoAlbum* auxAde ;
             string nod;
             while (auxFila!=0)
             {
                 auxColu = auxFila; 
                 while (auxColu != 0)
                 {
-                    auxAde = auxColu;
-                    while (auxAde->getAde() != 0)
-                    {
-                        if(auxAde->getName().compare(nombre)){
-                            return auxAde;
-                        }
-                        auxAde = auxAde->getAde();
-                    }
                     cout << nod << endl;
                     auxColu = auxColu->getDown();
                 }
@@ -420,15 +238,22 @@ class Cubo
             }
             return 0;
         }
-
+        string cuerpograph = "";
         void GRAficar(){
+            cuerpograph ="";
             ofstream file;
-            file.open("C:/ruta/archivos/archivo.txt");
-            file << "primera línea\n";
-            file << "segunda línea\n";
-            file << "tercera línea\n";
-            file.close();
+            string str1 = "dot -Tpng Reportes\\archivoCubo.txt -o Reportes\\ReporteCubo.png";
+            file.open("Reportes\\archivoCubo.txt");
+            file << "digraph Sparce_Matrix{ \n" ;
+            file << "node [shape=box]\n";
+            file << "Mt [label = \"Matrix\" width = 1.5 style = filled, fillcolor = firebrick1];\n" ;
 
+            file<<cuerpograph;
+            file<<"}\n";
+            file.close();
+            system(str1.c_str());
+            system("Reportes\\archivoCubo.png");
+            cout << "------------------------ GRAFICADO ----------------------------";
         }
 
         private:
