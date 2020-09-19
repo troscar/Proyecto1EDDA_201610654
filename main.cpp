@@ -18,9 +18,18 @@ using json = nlohmann::json;
 int main()
 {
     Cubo *matriz = new Cubo();
-    matriz->insertar_nueva_columna_ordenada(12);
-    matriz->insertar_nueva_fila_ordenada(6);
+    NodoAlbum *nuevo = new NodoAlbum("cama1","azul",4,3);
+    matriz->insertar_nodo_conectando(nuevo);
+    nuevo = new NodoAlbum("cama2","azul",4,6);
+    matriz->insertar_nodo_conectando(nuevo);
+    nuevo = new NodoAlbum("cama3","azul",12,8);
+    matriz->insertar_nodo_conectando(nuevo);
+    nuevo = new NodoAlbum("cama4","azul",7,8);
+    matriz->insertar_nodo_conectando(nuevo);
+    //matriz->insertar_nueva_columna_ordenada(12);
+    //matriz->insertar_nueva_fila_ordenada(6);
     matriz->recorrer_cubo_en_fila();
+    matriz->recorrer_cubo_en_colum();
 
     
     return 0;

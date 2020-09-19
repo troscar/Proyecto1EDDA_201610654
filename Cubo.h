@@ -60,54 +60,42 @@ class Cubo
         {
             NodoAlbum *temp = root;
             while(temp->getNext()!=0){
-                cout<<"buscando0";
                 temp = temp->getNext();
             }
-            cout<<"Termina";
             while (contador_x<x)
             {
-                cout<<"crea";
                 contador_x++;
-                cout<<"crea1";
                 NodoAlbum *nuevo = new NodoAlbum(to_string(contador_x),"blanco");
-                cout<<"crea2";
                 temp->setNext(nuevo);
-                cout<<"crea3";
                 temp = temp->getNext();
-                cout<<"crea4";
             }
+            return temp;
         }
 
         NodoAlbum* insertar_nueva_fila_ordenada(int y)
         {
             NodoAlbum *temp = root;
             while(temp->getDown()!=0){
-                cout<<"buscando0";
                 temp = temp->getDown();
             }
-            cout<<"Termina";
             while (contador_y<y)
             {
-                cout<<"crea";
                 contador_y++;
-                cout<<"crea1";
                 NodoAlbum *nuevo = new NodoAlbum(to_string(contador_y),"blanco");
-                cout<<"crea2";
                 temp->setDown(nuevo);
-                cout<<"crea3";
                 temp = temp->getDown();
-                cout<<"crea4";
             }
+            return temp;
         }
-/*
-        void insertar_nodo_conectando(NodoAlbum * nuevo){
-            NodoAlbum * columna = buscar_columna(nuevo->getX());
-            NodoAlbum * fila = buscar_fila(nuevo->getMonth());
 
-            // NO EXISTE NNGUN CABEZAL 
+        void insertar_nodo_conectando(NodoAlbum * nuevo){
+            NodoAlbum * columna = buscar_columna(to_string(nuevo->getX()));
+            NodoAlbum * fila = buscar_fila(to_string(nuevo->getY()));
+
+            // NO EXISTE NNGUN CABEZALES 
             if(fila==0 && columna==0){
-                columna = insertar_nueva_columna_ordenada(nuevo->getYear());
-                fila = insertar_nueva_fila_ordenada(nuevo->getMonth());
+                columna = insertar_nueva_columna_ordenada(nuevo->getX());
+                fila = insertar_nueva_fila_ordenada(nuevo->getY());
                 fila->setNext(nuevo);
                 columna->setDown(nuevo);
                 nuevo->setBefore(fila);
@@ -115,12 +103,12 @@ class Cubo
                 return;
             }
 
-            //EXISTE EL AÑO PERO NO EL MES
+            //EXISTE EL x PERO NO Y
             if(fila ==0 && columna!=0){
                 bool antes = false;
-                fila = insertar_nueva_fila_ordenada(nuevo->getMonth());
+                fila = insertar_nueva_fila_ordenada(nuevo->getY());
                 while (columna->getDown()!=0){
-                    if(columna->getMonth().compare(nuevo->getMonth()) == 1){
+                    if(to_string(columna->getY()).compare(to_string(nuevo->getY())) == 1){
                         antes =true;
                         break;
                     }
@@ -144,12 +132,12 @@ class Cubo
                 }
             }
 
-            // EXISTE EL x PERO NO EL AÑO
+            // EXISTE EL Y PERO NO  X
             if(fila!=0 && columna==0){
                 bool antes =false;
-                columna = insertar_nueva_columna_ordenada(nuevo->getYear());
+                columna = insertar_nueva_columna_ordenada(nuevo->getX());
                 while (fila->getNext()!=0){
-                    if(fila->getYear().compare(nuevo->getYear()) == 1){
+                    if(to_string(fila->getX()).compare(to_string(nuevo->getX())) == 1){
                         antes = true;
                         break;
                     }
@@ -174,19 +162,92 @@ class Cubo
             
             }
 
-
-            // EXISTEN LOS DOS 
+             // EXISTEN LOS DOS 
             if(fila!=0 && columna!=0){
-                
+                bool existe = false;
+                //BUSCO EL NODO EN LA INTERSECCION
+                fila = fila->getNext();
+                while (fila!=0){
+                    if(to_string(fila->getX()).compare(to_string(nuevo->getX())) == 0){
+                        existe = true;
+                        break;
+                    }
+                    fila = fila->getNext();
+                }
+                 //si el nodo no existe 
+                 //FALTA VERIFICAR LOS NODOS ALREDEDOR SI EXISTEN               
+                if(existe == false){
+                    bool a = false;
+                    bool b = false;
+                    fila = buscar_fila(to_string(nuevo->getY()));
+                    columna = buscar_columna(to_string(nuevo->getX()));
+                    string fi = fila->getName();
+                    string  col = columna->getName();
+                    //busco posicion mayor DE FILA
+                    while (fila->getNext()!=0){
+                        fila = fila->getNext();
+                        if(to_string(fila->getX()).compare(to_string(nuevo->getX())) == 1){
+                            a = true;
+                            break;
+                        }
+                    }
+                    //BUSCO POSICION EN COLUMNA
+                    while (columna->getDown()!=0){
+                        columna = columna->getDown();
+                        if(to_string(columna->getY()).compare(to_string(nuevo->getY())) == 1){ 
+                            b = true;
+                            break;
+                        }
+                    }
+                    //existe dentro del marco de < mes y < anyo
+                    if(a == true && b == true){
+                        nuevo->setUp(columna->getUp());
+                        nuevo->setDown(columna);
+                        nuevo->setBefore(fila->getBefore());
+                        nuevo->setNext(fila);
+                        columna->getUp()->setDown(nuevo);
+                        columna->setUp(nuevo);
+                        fila->getBefore()->setNext(nuevo);
+                        fila->setBefore(nuevo);
+                    }
+                    //existe en el dentro de mes pero no de anyo
+                    if(a == true && b == false){
+                        nuevo->setUp(columna);
+                        nuevo->setBefore(fila->getBefore());
+                        nuevo->setNext(fila);
+                        columna->setDown(nuevo);
+                        fila->getBefore()->setNext(nuevo);
+                        fila->setBefore(nuevo);
+                    
+                    }
+                    //existe en dentro de anio pero no de mes 
+                    if(a == false && b == true){
+                        nuevo->setUp(columna->getUp());
+                        nuevo->setDown(columna);
+                        nuevo->setBefore(fila);
+                        fila->setNext(nuevo);
+                        columna->getUp()->setDown(nuevo);
+                        columna->setUp(nuevo);
+                    
+                    }
+                    //existe fuera del cuadro
+                    if(a == false && b == false){
+                        nuevo->setUp(columna);
+                        nuevo->setBefore(fila);
+                        fila->setNext(nuevo);
+                        columna->setDown(nuevo);
+                    
+                    }
+                }   
             }
         }
-        */
+
+
         void recorrer_cubo_en_colum(){
             NodoAlbum* auxFila = root;
             NodoAlbum* auxColu ;
             while (auxFila!=0)
             {
-                cout <<"||" <<auxFila->getName() <<"||"<< endl;
                 auxColu = auxFila; 
                 while (auxColu != 0)
                 {
