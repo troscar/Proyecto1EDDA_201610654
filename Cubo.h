@@ -280,6 +280,7 @@ class Cubo
             cout << "---------------------------------------------"<< endl;       
             cout << "---------FIN DE matriz -----------"<< endl;      
         }
+        
 
 
         NodoAlbum* buscar_nodo_(string nombre){
@@ -309,11 +310,44 @@ class Cubo
             file << "node [shape=box]\n";
             file << "Mt [label = \"Matrix\" width = 1.5 style = filled, fillcolor = firebrick1];\n" ;
 
+            NodoAlbum* temp = root->getDown();
+            int contax=-1;
+            while(temp!=0){
+                contax++;
+                cuerpograph = cuerpograph + "U"+to_string(contax)+" [label = \""+temp->getName()+"\" pos = \"5.3,3.5!\"width = 1.5 style = filled];\n";
+                temp = temp->getDown();
+            }
+            if(contax>-1){
+                cuerpograph = cuerpograph + "Mt -> U0;\n";
+            }
+            for(int i=0;i<contax;i++){
+                cuerpograph = cuerpograph + "U"+to_string(i)+" -> U"+to_string(i+1)+" { constraint = true };\n"; 
+            }
+
+            temp = root->getNext();
+            contax=-1;
+            while(temp!=0){
+                contax++;
+                cuerpograph = cuerpograph + "A"+to_string(contax)+" [label = \""+temp->getName()+"\" width = 1.5 style = filled];\n";
+                temp = temp->getNext();
+            }
+            if(contax>-1){
+                cuerpograph = cuerpograph + "Mt -> A0 { constraint = true };\n";
+            }
+            for(int i=0;i<contax;i++){
+                cuerpograph = cuerpograph + "A"+to_string(i)+" -> A"+to_string(i+1)+";\n"; 
+            }
+            cuerpograph = cuerpograph + "{ rank = same; Mt; ";
+            for(int i=0;i<contax+1;i++){
+                cuerpograph = cuerpograph + "A"+to_string(i)+" ;"; 
+            }
+            cuerpograph = cuerpograph + " }";
+
             file<<cuerpograph;
             file<<"}\n";
             file.close();
             system(str1.c_str());
-            system("Reportes\\archivoCubo.png");
+            system("Reportes\\ReporteCubo.png");
             cout << "------------------------ GRAFICADO ----------------------------";
         }
 

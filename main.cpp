@@ -29,7 +29,8 @@ int main()
     //matriz->insertar_nueva_columna_ordenada(12);
     //matriz->insertar_nueva_fila_ordenada(6);
     matriz->recorrer_cubo_en_fila();
-    matriz->recorrer_cubo_en_colum();
+    //matriz->recorrer_cubo_en_colum();
+    matriz->GRAficar();
 
     
     return 0;
