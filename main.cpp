@@ -22,9 +22,11 @@ int main()
     matriz->insertar_nodo_conectando(nuevo);
     nuevo = new NodoAlbum("cama2","azul",4,6);
     matriz->insertar_nodo_conectando(nuevo);
-    nuevo = new NodoAlbum("cama3","azul",12,8);
+    nuevo = new NodoAlbum("cama3","azul",7,8);
     matriz->insertar_nodo_conectando(nuevo);
-    nuevo = new NodoAlbum("cama4","azul",7,8);
+    nuevo = new NodoAlbum("cama4","azul",12,8);
+    matriz->insertar_nodo_conectando(nuevo);
+    nuevo = new NodoAlbum("cama6","azul",0,0);
     matriz->insertar_nodo_conectando(nuevo);
     //matriz->insertar_nueva_columna_ordenada(12);
     //matriz->insertar_nueva_fila_ordenada(6);

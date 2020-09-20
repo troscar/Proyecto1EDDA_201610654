@@ -45,4 +45,32 @@ A8 -> A9;
 A9 -> A10;
 A10 -> A11;
 A11 -> A12;
-{ rank = same; Mt; A0 ;A1 ;A2 ;A3 ;A4 ;A5 ;A6 ;A7 ;A8 ;A9 ;A10 ;A11 ;A12 ; }}
+{ rank = same; Mt; A0 ;A1 ;A2 ;A3 ;A4 ;A5 ;A6 ;A7 ;A8 ;A9 ;A10 ;A11 ;A12 ; }
+N0_L0 [label = "cama6" width = 1.5];
+U0 -> N0_L0
+N0_L0 -> N0_L0
+{ rank = same; U0;N0_L0;  }
+N4_L3 [label = "cama1" width = 1.5];
+U3 -> N4_L3
+N4_L3 -> N4_L3
+{ rank = same; U3;N4_L3;  }
+N4_L6 [label = "cama2" width = 1.5];
+U6 -> N4_L6
+N4_L6 -> N4_L6
+{ rank = same; U6;N4_L6;  }
+N7_L8 [label = "cama3" width = 1.5];
+U8 -> N7_L8
+N7_L8 -> N7_L8
+N12_L8 [label = "cama4" width = 1.5];
+N7_L8 -> N12_L8
+{ rank = same; U8;N7_L8;N12_L8;  }
+A0 -> N0_L0
+N0_L0 -> N0_L0
+A4 -> N4_L3
+N4_L3 -> N4_L3
+N4_L3 -> N4_L6
+A7 -> N7_L8
+N7_L8 -> N7_L8
+A12 -> N12_L8
+N12_L8 -> N12_L8
+}

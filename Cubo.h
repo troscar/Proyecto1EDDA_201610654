@@ -65,7 +65,7 @@ class Cubo
             while (contador_x<x)
             {
                 contador_x++;
-                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_x),"blanco");
+                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_x),"blanco",contador_x,-1);
                 temp->setNext(nuevo);
                 temp = temp->getNext();
             }
@@ -81,7 +81,7 @@ class Cubo
             while (contador_y<y)
             {
                 contador_y++;
-                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_y),"blanco");
+                NodoAlbum *nuevo = new NodoAlbum(to_string(contador_y),"blanco",-1,contador_y);
                 temp->setDown(nuevo);
                 temp = temp->getDown();
             }
@@ -281,74 +281,121 @@ class Cubo
             cout << "---------FIN DE matriz -----------"<< endl;      
         }
         
-
-
-        NodoAlbum* buscar_nodo_(string nombre){
-            NodoAlbum* auxFila = root;
-            NodoAlbum* auxColu ;
-            string nod;
-            while (auxFila!=0)
-            {
-                auxColu = auxFila; 
-                while (auxColu != 0)
-                {
-                    cout << nod << endl;
-                    auxColu = auxColu->getDown();
-                }
-                auxFila= auxFila->getNext();
-                cout   << "-----fin de la byusqueda-----"<<endl;
-            }
-            return 0;
-        }
         string cuerpograph = "";
         void GRAficar(){
             cuerpograph ="";
-            ofstream file;
-            string str1 = "dot -Tpng Reportes\\archivoCubo.txt -o Reportes\\ReporteCubo.png";
-            file.open("Reportes\\archivoCubo.txt");
-            file << "digraph Sparce_Matrix{ \n" ;
-            file << "node [shape=box]\n";
-            file << "Mt [label = \"Matrix\" width = 1.5 style = filled, fillcolor = firebrick1];\n" ;
+                ofstream file;
+                string str1 = "dot -Tpng Reportes\\archivoCubo.txt -o Reportes\\ReporteCubo.png";
+                file.open("Reportes\\archivoCubo.txt");
+                file << "digraph Sparce_Matrix{ \n" ;
+                file << "node [shape=box]\n";
+                file << "Mt [label = \"Matrix\" width = 1.5 style = filled, fillcolor = firebrick1];\n" ;
 
-            NodoAlbum* temp = root->getDown();
-            int contax=-1;
-            while(temp!=0){
-                contax++;
-                cuerpograph = cuerpograph + "U"+to_string(contax)+" [label = \""+temp->getName()+"\" pos = \"5.3,3.5!\"width = 1.5 style = filled];\n";
-                temp = temp->getDown();
-            }
-            if(contax>-1){
-                cuerpograph = cuerpograph + "Mt -> U0;\n";
-            }
-            for(int i=0;i<contax;i++){
-                cuerpograph = cuerpograph + "U"+to_string(i)+" -> U"+to_string(i+1)+" { constraint = true };\n"; 
-            }
+                NodoAlbum* temp = root->getDown();
+                int contax=-1;
+                while(temp!=0){
+                    contax++;
+                    cuerpograph = cuerpograph + "U"+to_string(contax)+" [label = \""+temp->getName()+"\" pos = \"5.3,3.5!\"width = 1.5 style = filled];\n";
+                    temp = temp->getDown();
+                }
+                if(contax>-1){
+                    cuerpograph = cuerpograph + "Mt -> U0;\n";
+                }
+                for(int i=0;i<contax;i++){
+                    cuerpograph = cuerpograph + "U"+to_string(i)+" -> U"+to_string(i+1)+" { constraint = true };\n"; 
+                }
 
-            temp = root->getNext();
-            contax=-1;
-            while(temp!=0){
-                contax++;
-                cuerpograph = cuerpograph + "A"+to_string(contax)+" [label = \""+temp->getName()+"\" width = 1.5 style = filled];\n";
-                temp = temp->getNext();
-            }
-            if(contax>-1){
-                cuerpograph = cuerpograph + "Mt -> A0 { constraint = true };\n";
-            }
-            for(int i=0;i<contax;i++){
-                cuerpograph = cuerpograph + "A"+to_string(i)+" -> A"+to_string(i+1)+";\n"; 
-            }
-            cuerpograph = cuerpograph + "{ rank = same; Mt; ";
-            for(int i=0;i<contax+1;i++){
-                cuerpograph = cuerpograph + "A"+to_string(i)+" ;"; 
-            }
-            cuerpograph = cuerpograph + " }";
+                temp = root->getNext();
+                int contay=-1;
+                while(temp!=0){
+                    contay++;
+                    cuerpograph = cuerpograph + "A"+to_string(contay)+" [label = \""+temp->getName()+"\" width = 1.5 style = filled];\n";
+                    temp = temp->getNext();
+                }
+                if(contay>-1){
+                    cuerpograph = cuerpograph + "Mt -> A0 { constraint = true };\n";
+                }
+                for(int i=0;i<contay;i++){
+                    cuerpograph = cuerpograph + "A"+to_string(i)+" -> A"+to_string(i+1)+";\n"; 
+                }
+                cuerpograph = cuerpograph + "{ rank = same; Mt; ";
+                for(int i=0;i<contay+1;i++){
+                    cuerpograph = cuerpograph + "A"+to_string(i)+" ;"; 
+                }
+                cuerpograph = cuerpograph + " }\n";
+                cout<< contax <<endl;
+                cout<< contay <<endl;
+                NodoAlbum* auxFila = root->getDown();
+                NodoAlbum* auxColu ;
+                int cx=0 ; int cy=0;
+                int cabezalx = (-1); int cabezaly =(-1);
+                string cue="";string cuey="";
+                bool agre = false;
+                while (auxFila!=0)
+                {
+                    auxColu = auxFila->getNext(); 
+                    agre = false;
+                    cabezalx=(-1);
+                    while(auxColu!=0){
+                        cuerpograph = cuerpograph + "N"+to_string(auxColu->getX())+"_L"+ to_string(auxColu->getY())+" [label = \""+auxColu->getName()+"\" width = 1.5];\n";
+                        cx=auxColu->getX();
+                        cue = cue + "N"+to_string(auxColu->getX())+"_L"+ to_string(auxColu->getY())+";";
+                        if(cabezalx==(-1)){
+                            cuerpograph = cuerpograph + "U"+to_string(auxFila->getY()) +" -> N"+to_string(auxColu->getX())+"_L"+ to_string(auxColu->getY())+"\n";
+                            cabezalx = auxColu->getX();
+                        }if(cabezalx!=(-1)){
+                            cuerpograph = cuerpograph + "N"+to_string(cabezalx)+"_L"+ to_string(auxColu->getY()) +" -> N"+to_string(auxColu->getX())+"_L"+ to_string(auxColu->getY())+"\n";
+                            cabezalx = auxColu->getX();
+                        } 
+                        auxColu = auxColu->getNext();
+                        agre = true;
+                    }
+                    if(agre){
+                        cuerpograph = cuerpograph+ "{ rank = same; U"+to_string(auxFila->getY()) +";"+cue+"  }\n";
+                        cue="";
+                    }
+                    auxFila= auxFila->getDown();
+                }
+               auxFila ;
+                 auxColu = root->getNext();
+                 cx=0 ;  cy=0;
+                 cabezalx = (-1);  cabezaly =(-1);
+                 cue="";
+                 agre = false;
+                while (auxColu!=0)
+                {
+                    auxFila = auxColu->getDown();
+                    agre = false;
+                    cabezaly=(-1); 
+                    while (auxFila != 0)
+                    {   
+                        cue = cue + "N"+to_string(auxFila->getY())+"_L"+ to_string(auxFila->getX())+";";
+                        if(cabezaly==(-1)){
+                            cuerpograph = cuerpograph + "A"+to_string(auxColu->getX()) +" -> N"+to_string(auxColu->getX())+"_L"+ to_string(auxFila->getY())+"\n";
+                            cabezaly = auxFila->getY();
+                        }if(cabezaly!=(-1)){
+                            cuerpograph = cuerpograph + "N"+to_string(auxColu->getX())+"_L"+ to_string(cabezaly) +" -> N"+to_string(auxColu->getX())+"_L"+ to_string(auxFila->getY())+"\n";
+                            cabezaly = auxFila->getY();
+                        } 
+                        auxFila= auxFila->getDown();
+                        //agre = true;
+                    }
+                    if(agre){
+                        cuerpograph = cuerpograph+ "{ rank = same; A"+to_string(auxColu->getX()) +";"+cue+"  }\n";
+                        cue="";
+                    }
+                    auxColu= auxColu->getNext();
 
-            file<<cuerpograph;
-            file<<"}\n";
-            file.close();
-            system(str1.c_str());
-            system("Reportes\\ReporteCubo.png");
-            cout << "------------------------ GRAFICADO ----------------------------";
+                }
+
+
+
+                file<<cuerpograph;
+                file<<"}\n";
+                file.close();
+                system(str1.c_str());
+                system("Reportes\\ReporteCubo.png");
+                cout << "------------------------ GRAFICADO ----------------------------";            
         }
 
         private:
