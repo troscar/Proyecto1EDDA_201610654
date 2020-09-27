@@ -157,7 +157,7 @@ void AVL::Equilibrar(Nodo *nodo, int rama, bool nuevo)
 // Rotaci�n doble a derechas
 void AVL::RDD(Nodo* nodo)
 {
-   cout << "RDD" << endl;
+  // cout << "RDD" << endl;
    Nodo *Padre = nodo->padre;
    Nodo *P = nodo;
    Nodo *Q = P->izquierdo;
@@ -194,7 +194,7 @@ void AVL::RDD(Nodo* nodo)
 // Rotaci�n doble a izquierdas
 void AVL::RDI(Nodo* nodo)
 {
-   cout << "RDI" << endl;
+   //cout << "RDI" << endl;
    Nodo *Padre = nodo->padre;
    Nodo *P = nodo;
    Nodo *Q = P->derecho;
@@ -231,7 +231,7 @@ void AVL::RDI(Nodo* nodo)
 // Rotaci�n simple a derechas
 void AVL::RSD(Nodo* nodo)
 {
-   cout << "RSD" << endl;
+   //cout << "RSD" << endl;
    Nodo *Padre = nodo->padre;
    Nodo *P = nodo;
    Nodo *Q = P->izquierdo;
@@ -259,7 +259,7 @@ void AVL::RSD(Nodo* nodo)
 // Rotaci�n simple a izquierdas
 void AVL::RSI(Nodo* nodo)
 {
-   cout << "RSI" << endl;
+   //cout << "RSI" << endl;
    Nodo *Padre = nodo->padre;
    Nodo *P = nodo;
    Nodo *Q = P->derecho;

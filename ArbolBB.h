@@ -10,7 +10,7 @@ class ArbolBB
 {
     class Nodo{
         public:
-            Nodo(string name_,string color_,string x_, string y_){
+            Nodo(string name_,string color_,int x_, int y_){
                 izq = 0;
                 der = 0;
                 name =name_;
@@ -22,8 +22,8 @@ class ArbolBB
             Nodo *getDer(){ return der;}
             string getName(){return name;}
             string getColor(){return color;}
-            string getX(){return x;}
-            string getY(){return y;}
+            int getX(){return x;}
+            int getY(){return y;}
             void setDer(Nodo* n){der = n;}
             void setIzq(Nodo* n){izq = n;}
             void PreOrdenGRAFICAR(Nodo *nodo, bool r);
@@ -34,8 +34,8 @@ class ArbolBB
         Nodo* der;
         string name;
         string color;
-        string x;
-        string y;
+        int x;
+        int y;
 
     };
     public: 
@@ -50,7 +50,7 @@ class ArbolBB
                 return true;
             }
         }
-        void insertar(string nom,string col,string x,string y){
+        void insertar(string nom,string col,int x,int y){
             if(root!=0)
             {
                 //cout<< root->getName()<<"||raiz|| agregar"<<endl;
@@ -119,7 +119,7 @@ class ArbolBB
     private:
          Nodo* root;
         
-        void insertar_p(Nodo* raiz,string nam,string col,string x, string y){
+        void insertar_p(Nodo* raiz,string nam,string col,int x, int y){
             Nodo* noddo = new Nodo(nam,col,x,y);
             //cout<<"a";
             if(nam.compare(raiz->getName())== 1){
